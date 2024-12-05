@@ -1,0 +1,10 @@
+---
+keys:
+  - users:
+      - &ajgon age13s2dafyr9sfltp8heujttxug4v4m3qhj7sxzqrj6x6x3cu5n29uqfvj62l
+
+creation_rules:
+  - path_regex: .*\.sops\.tfvars$
+    key_groups:
+      - age:
+          - *ajgon
