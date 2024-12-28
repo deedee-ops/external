@@ -1,4 +1,4 @@
-resource "cloudflare_tunnel" "homelab" {
+resource "cloudflare_zero_trust_tunnel_cloudflared" "homelab" {
   account_id = var.account_id
   name       = "homelab tunnel"
   secret     = var.tunnel_secret

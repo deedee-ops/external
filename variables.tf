@@ -83,3 +83,9 @@ variable "mail_spam_targets" {
   description = "List of personal emails user by spammers to reject"
   type        = list(string)
 }
+
+variable "state_and_plan_passphrase" {
+  description = "Passphrase to decrypt state and plan"
+  type        = string
+  sensitive   = true
+}

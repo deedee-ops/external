@@ -67,6 +67,13 @@
         devShells.default =
           let
             tofuWrapper = pkgs.writeShellScriptBin "tofu" ''
+              if [ -f terraform.sops.tfstate ]; then
+                ${lib.getExe pkgs.sops} -d terraform.sops.tfstate > terraform.tfstate
+                cleanup() {
+                  rm -rf terraform.tfstate
+                }
+                trap cleanup EXIT
+              fi
               if [ -f terraform.sops.tfvars ]; then
                 ${lib.getExe pkgs.sops} -d terraform.sops.tfvars > terraform.tfvars
                 cleanup() {
@@ -91,8 +98,9 @@
               + ''
                 ${lib.getExe pkgs.git} pull origin master:master --rebase
 
+                ${lib.getExe pkgs.sops} -d terraform.sops.tfstate > terraform.tfstate
                 ${lib.getExe pkgs.sops} -d terraform.sops.tfvars > terraform.tfvars
-                ${lib.getExe tofuWrapper} init -backend-config=<(grep '^#' terraform.tfvars | sed "s@^# *@@g") -upgrade
+                ${lib.getExe tofuWrapper} init -upgrade
               '';
           };
       }

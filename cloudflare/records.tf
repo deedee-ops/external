@@ -2,7 +2,7 @@
 resource "cloudflare_record" "external_ingress" {
   zone_id = data.cloudflare_zone.base_domain.id
   name    = "external"
-  content = "${cloudflare_tunnel.homelab.id}.cfargotunnel.com"
+  content = "${cloudflare_zero_trust_tunnel_cloudflared.homelab.id}.cfargotunnel.com"
   type    = "CNAME"
   proxied = true
   ttl     = 1
