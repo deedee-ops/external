@@ -67,22 +67,23 @@
         devShells.default =
           let
             tofuWrapper = pkgs.writeShellScriptBin "tofu" ''
+              cleanup() {
+                rm -rf terraform.tfstate || true
+                rm -rf terraform.tfvars || true
+              }
+              trap cleanup EXIT
+
               if [ -f terraform.sops.tfstate ]; then
                 ${lib.getExe pkgs.sops} -d terraform.sops.tfstate > terraform.tfstate
-                cleanup() {
-                  rm -rf terraform.tfstate
-                }
-                trap cleanup EXIT
               fi
               if [ -f terraform.sops.tfvars ]; then
                 ${lib.getExe pkgs.sops} -d terraform.sops.tfvars > terraform.tfvars
-                cleanup() {
-                  rm -rf terraform.tfvars
-                }
-                trap cleanup EXIT
               fi
 
               ${lib.getExe pkgs.opentofu} "$@"
+
+              ${lib.getExe pkgs.sops} -e terraform.tfstate > terraform.sops.tfstate
+              cleanup
             '';
           in
           pkgs.mkShell {
@@ -90,8 +91,9 @@
 
             buildInputs = self.checks.${system}.pre-commit-check.enabledPackages ++ [
               pkgs.sops
-              tofuWrapper
             ];
+
+            packages = [ tofuWrapper ];
 
             shellHook =
               self.checks.${system}.pre-commit-check.shellHook
@@ -101,6 +103,9 @@
                 ${lib.getExe pkgs.sops} -d terraform.sops.tfstate > terraform.tfstate
                 ${lib.getExe pkgs.sops} -d terraform.sops.tfvars > terraform.tfvars
                 ${lib.getExe tofuWrapper} init -upgrade
+
+                rm -rf terraform.tfstate || true
+                rm -rf terraform.tfvars || true
               '';
           };
       }

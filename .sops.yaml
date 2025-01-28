@@ -4,7 +4,7 @@ keys:
       - &ajgon age13s2dafyr9sfltp8heujttxug4v4m3qhj7sxzqrj6x6x3cu5n29uqfvj62l
 
 creation_rules:
-  - path_regex: .*\.sops\.tf(vars|state)$
+  - path_regex: .*\.tf(vars|state)$
     key_groups:
       - age:
           - *ajgon
