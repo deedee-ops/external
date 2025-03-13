@@ -9,11 +9,11 @@ resource "cloudflare_record" "external_ingress" {
 }
 
 # rustdesk relay
-resource "cloudflare_record" "rustdesk_relay" {
-  zone_id = data.cloudflare_zone.base_domain.id
-  name    = "relay"
-  content = "homelab.${data.cloudflare_zone.base_domain.name}"
-  type    = "CNAME"
-  proxied = false
-  ttl     = 1
-}
+# resource "cloudflare_record" "rustdesk_relay" {
+#   zone_id = data.cloudflare_zone.base_domain.id
+#   name    = "relay"
+#   content = "homelab.${data.cloudflare_zone.base_domain.name}"
+#   type    = "CNAME"
+#   proxied = false
+#   ttl     = 1
+# }
