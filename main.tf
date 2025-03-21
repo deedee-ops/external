@@ -26,7 +26,7 @@ terraform {
   required_providers {
     cloudflare = {
       source  = "cloudflare/cloudflare"
-      version = "5.1.0"
+      version = "4.52.0"
     }
 
     migadu = {
