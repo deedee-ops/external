@@ -1,6 +1,7 @@
 variable "base_domain" {
   description = "Domain used for all homelab needs"
-  type        = string
+  type        = object({ name = string, zone_id = string })
+  sensitive   = true
 }
 
 variable "cloudflare_account_id" {
@@ -35,19 +36,19 @@ variable "mail_migadu_admin_token" {
 
 variable "mail_domain_primary" {
   description = "Primary domain for email"
-  type        = object({ name = string, verification_code = string })
+  type        = object({ name = string, zone_id = string, verification_code = string })
   sensitive   = true
 }
 
 variable "mail_domain_spam" {
   description = "Spam domain for email"
-  type        = object({ name = string })
+  type        = object({ name = string, zone_id = string })
   sensitive   = true
 }
 
 variable "mail_domain_aliases" {
   description = "List of aliases for primary domain"
-  type        = map(object({ verification_code = string }))
+  type        = map(object({ zone_id = string, verification_code = string }))
 }
 
 variable "mail_extra_identities" {

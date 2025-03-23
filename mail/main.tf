@@ -2,7 +2,7 @@ terraform {
   required_providers {
     cloudflare = {
       source  = "cloudflare/cloudflare"
-      version = "4.52.0"
+      version = "5.2.0"
     }
 
     migadu = {
@@ -15,15 +15,15 @@ terraform {
 }
 
 data "cloudflare_zone" "domain_primary" {
-  name = var.domain_primary.name
+  zone_id = var.domain_primary.zone_id
 }
 
 data "cloudflare_zone" "domain_spam" {
-  name = var.domain_spam.name
+  zone_id = var.domain_spam.zone_id
 }
 
 data "cloudflare_zone" "domain_aliases" {
   for_each = var.domain_aliases
 
-  name = each.key
+  zone_id = each.value.zone_id
 }

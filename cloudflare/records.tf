@@ -1,6 +1,6 @@
 # Cloudflare Tunnel Ingress
-resource "cloudflare_record" "external_ingress" {
-  zone_id = data.cloudflare_zone.base_domain.id
+resource "cloudflare_dns_record" "external_ingress" {
+  zone_id = data.cloudflare_zone.base_domain.zone_id
   name    = "external"
   content = "${cloudflare_zero_trust_tunnel_cloudflared.homelab.id}.cfargotunnel.com"
   type    = "CNAME"
@@ -9,8 +9,8 @@ resource "cloudflare_record" "external_ingress" {
 }
 
 # rustdesk relay
-# resource "cloudflare_record" "rustdesk_relay" {
-#   zone_id = data.cloudflare_zone.base_domain.id
+# resource "cloudflare_dns_record" "rustdesk_relay" {
+#   zone_id = data.cloudflare_zone.base_domain.zone_id
 #   name    = "relay"
 #   content = "homelab.${data.cloudflare_zone.base_domain.name}"
 #   type    = "CNAME"

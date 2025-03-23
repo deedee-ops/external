@@ -1,18 +1,18 @@
 variable "domain_primary" {
   description = "Primary domain"
-  type        = object({ name = string, verification_code = string })
+  type        = object({ name = string, zone_id = string, verification_code = string })
   sensitive   = true
 }
 
 variable "domain_spam" {
   description = "Spam domain"
-  type        = object({ name = string })
+  type        = object({ name = string, zone_id = string })
   sensitive   = true
 }
 
 variable "domain_aliases" {
   description = "List of aliases for primary domain"
-  type        = map(object({ verification_code = string }))
+  type        = map(object({ zone_id = string, verification_code = string }))
 }
 
 variable "extra_identities" {

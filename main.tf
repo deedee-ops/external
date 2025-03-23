@@ -13,7 +13,8 @@ terraform {
     }
 
     state {
-      enforced = true
+      enforced = false
+
       method   = method.aes_gcm.state_and_plan
     }
 
@@ -26,7 +27,7 @@ terraform {
   required_providers {
     cloudflare = {
       source  = "cloudflare/cloudflare"
-      version = "4.52.0"
+      version = "5.2.0"
     }
 
     migadu = {
