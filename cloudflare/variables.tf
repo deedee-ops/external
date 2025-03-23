@@ -6,7 +6,8 @@ variable "account_id" {
 
 variable "base_domain" {
   description = "Domain used for all homelab needs"
-  type        = string
+  type        = object({ name = string, zone_id = string })
+  sensitive   = true
 }
 
 variable "tunnel_secret" {
